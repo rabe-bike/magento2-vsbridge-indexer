@@ -34,11 +34,15 @@ class ClientBuilder implements ClientBuilderInterface
     public function build(array $options = [])
     {
         $options = array_merge($this->defaultOptions, $options);
-        $esClientBuilder = \Elasticsearch\ClientBuilder::create();
+        $esClientBuilder = \Elastic\Elasticsearch\ClientBuilder::create();
         $host = $this->getHost($options);
 
         if (!empty($host)) {
             $esClientBuilder->setHosts([$host]);
+        }
+
+        if (isset($options['enable_http_auth'])) {
+            $esClientBuilder->setBasicAuthentication($options['auth_user'], $options['auth_pwd']);
         }
 
         return $esClientBuilder->build();
@@ -49,7 +53,7 @@ class ClientBuilder implements ClientBuilderInterface
      *
      * @param array $options Client options.
      *
-     * @return array
+     * @return string
      */
     private function getHost(array $options)
     {
@@ -61,16 +65,7 @@ class ClientBuilder implements ClientBuilderInterface
             $scheme = $options['scheme'];
         }
 
-        $currentHostConfig = [
-            'host' => $options['host'],
-            'port' => $options['port'],
-            'scheme' => $scheme,
-        ];
-
-        if ($options['enable_http_auth']) {
-            $currentHostConfig['user'] = $options['auth_user'];
-            $currentHostConfig['pass'] = $options['auth_pwd'];
-        }
+        $currentHostConfig = $scheme . '://' . $options ['host'] . ':' . $options ['port'];
 
         return $currentHostConfig;
     }
