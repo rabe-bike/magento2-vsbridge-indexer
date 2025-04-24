@@ -78,12 +78,12 @@ class Rebuild
     public function execute(string $storeId = null)
     {
         if (!$this->validate()) {
-            return;
+            return 1;
         }
 
         if ($storeId && !$this->indexerStoreManager->isStoreAllowedToReindex($storeId)) {
             $this->output->writeln("Store " . $storeId . " is not allowed.");
-            return;
+            return 1;
         }
 
         $storeList = $this->indexerStoreManager->getStores($storeId);
@@ -95,6 +95,8 @@ class Rebuild
             $this->reindexStore($store);
             $this->output->writeln("Reindexing has completed!");
         }
+
+        return 0;
     }
 
     /**
@@ -140,7 +142,7 @@ class Rebuild
                 $resultTime = microtime(true) - $startTime;
 
                 $this->output->writeln(
-                    $indexer->getTitle() . ' index has been rebuilt successfully in ' . gmdate('H:i:s', $resultTime)
+                    $indexer->getTitle() . ' index has been rebuilt successfully in ' . gmdate('H:i:s', (int)$resultTime)
                 );
             } catch (LocalizedException $e) {
                 $this->output->writeln(sprintf('<error>%s</error>', $e->getMessage()));

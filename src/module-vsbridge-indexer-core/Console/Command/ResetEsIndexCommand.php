@@ -47,6 +47,7 @@ class ResetEsIndexCommand extends AbstractIndexerCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->invalidateIndices($output);
+        return 0;
     }
 
     /**

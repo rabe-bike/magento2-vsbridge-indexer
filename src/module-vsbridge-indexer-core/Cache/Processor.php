@@ -161,14 +161,12 @@ class Processor
         /** @var \Magento\Framework\HTTP\Adapter\Curl $curl */
         $curl = $this->curlFactory->create();
         $curl->setConfig($config);
-        $curl->write(\Zend_Http_Client::GET, $uri, '1.0');
+        $curl->write(\Laminas\Http\Request::METHOD_GET, $uri, '1.0');
         $response = $curl->read();
 
         if ($response !== false && !empty($response)) {
-            $httpCode = \Zend_Http_Response::extractCode($response);
-
-            if ($httpCode !== 200) {
-                $response = \Zend_Http_Response::extractBody($response);
+            preg_match("|^HTTP/[\d\.x]+ (\d+)|", $response, $matches);
+            if (isset($matches[1]) && (int)$matches[1] !== 200) {
                 $this->logger->error($response);
             }
         } else {
