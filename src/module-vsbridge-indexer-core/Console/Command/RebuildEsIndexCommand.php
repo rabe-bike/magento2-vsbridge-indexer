@@ -96,7 +96,7 @@ class RebuildEsIndexCommand extends Command
 Try using --help for more information.</comment>"
             );
 
-            return;
+            return 1;
         }
 
         $this->eventManager->dispatch(
@@ -117,5 +117,7 @@ Try using --help for more information.</comment>"
                 'allStores' => $allStores,
             ]
         );
+
+        return 0;
     }
 }

@@ -111,9 +111,11 @@ class SingleEntityIndexCommand extends AbstractIndexerCommand
                 "\nID: " . $id;
             $output->writeln("<info>Indexing... $message</info>");
             $indexer->reindexRow($id);
-        } else {
-            $output->writeln("<info>Index with code: $index hasn't been found. </info>");
+            return 0;
         }
+
+        $output->writeln("<info>Index with code: $index hasn't been found. </info>");
+        return 1;
     }
 
     /**
