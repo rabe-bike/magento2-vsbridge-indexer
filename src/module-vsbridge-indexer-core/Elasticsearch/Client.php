@@ -11,7 +11,7 @@ use Divante\VsbridgeIndexerCore\Model\ElasticsearchResolverInterface;
 class Client implements ClientInterface
 {
     /**
-     * @var \Elasticsearch\Client
+     * @var \Elastic\Elasticsearch\Client
      */
     private $client;
 
@@ -24,11 +24,11 @@ class Client implements ClientInterface
      * Client constructor.
      *
      * @param ElasticsearchResolverInterface $esVersionResolver
-     * @param \Elasticsearch\Client $client
+     * @param \Elastic\Elasticsearch\Client $client
      */
     public function __construct(
         ElasticsearchResolverInterface $esVersionResolver,
-        \Elasticsearch\Client $client
+        \Elastic\Elasticsearch\Client $client
     ) {
         $this->client = $client;
         $this->esVersionResolver = $esVersionResolver;
