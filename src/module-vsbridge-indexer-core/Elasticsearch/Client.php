@@ -174,14 +174,8 @@ class Client implements ClientInterface
         $requestPayload = [
             'index' => $indexName,
             'type'  => $type,
-            'body'  => [$type => $mapping]
+            'body'  => $mapping,
         ];
-
-        $esVersion = $this->esVersionResolver->getVersion();
-
-        if ($esVersion === ElasticsearchResolverInterface::ES_6_PLUS_VERSION) {
-            $requestPayload['include_type_name'] = true;
-        }
 
         $this->client->indices()->putMapping($requestPayload);
     }
