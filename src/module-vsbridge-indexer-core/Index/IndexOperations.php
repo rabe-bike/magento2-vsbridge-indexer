@@ -107,7 +107,7 @@ class IndexOperations implements IndexOperationInterface
         }
 
         $bulkParams = ['body' => $bulk->getOperations()];
-        $rawBulkResponse = $this->resolveClient($storeId)->bulk($bulkParams);
+        $rawBulkResponse = $this->resolveClient($storeId)->bulk($bulkParams)->asArray();
 
         return $this->bulkResponseFactory->create(
             ['rawResponse' => $rawBulkResponse]
