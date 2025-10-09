@@ -88,7 +88,7 @@ class Client implements ClientInterface
      */
     public function getClustersHealth(): array
     {
-        return $this->client->cat()->health();
+        return $this->client->cat()->health(['format' => 'json'])->asArray();
     }
 
     /**
@@ -101,7 +101,7 @@ class Client implements ClientInterface
         $indices = [];
 
         try {
-            $indices = $this->client->indices()->getMapping(['index' => $indexAlias]);
+            $indices = $this->client->indices()->getMapping(['index' => $indexAlias])->asArray();
         } catch (\Elasticsearch\Common\Exceptions\Missing404Exception $e) {
         }
 

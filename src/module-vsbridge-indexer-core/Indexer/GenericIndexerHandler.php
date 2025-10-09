@@ -138,7 +138,6 @@ class GenericIndexerHandler
                 if (!empty($docs)) {
                     $bulkRequest = $this->indexOperations->createBulk()->addDocuments(
                         $index->getName(),
-                        $this->typeName,
                         $docs
                     );
 
