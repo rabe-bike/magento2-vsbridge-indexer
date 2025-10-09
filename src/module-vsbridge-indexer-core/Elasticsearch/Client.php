@@ -166,14 +166,12 @@ class Client implements ClientInterface
 
     /**
      * @param string $indexName
-     * @param string $type
      * @param array $mapping
      */
-    public function putMapping(string $indexName, string $type, array $mapping)
+    public function putMapping(string $indexName, array $mapping)
     {
         $requestPayload = [
             'index' => $indexName,
-            'type'  => $type,
             'body'  => $mapping,
         ];
 
