@@ -28,7 +28,7 @@ class Client implements ClientInterface
      */
     public function __construct(
         ElasticsearchResolverInterface $esVersionResolver,
-        \Elastic\Elasticsearch\Client $client
+        \OpenSearch\Client $client
     ) {
         $this->client = $client;
         $this->esVersionResolver = $esVersionResolver;
@@ -88,7 +88,7 @@ class Client implements ClientInterface
      */
     public function getClustersHealth(): array
     {
-        return $this->client->cat()->health(['format' => 'json'])->asArray();
+        return $this->client->cat()->health();
     }
 
     /**
@@ -101,7 +101,7 @@ class Client implements ClientInterface
         $indices = [];
 
         try {
-            $indices = $this->client->indices()->getMapping(['index' => $indexAlias])->asArray();
+            $indices = $this->client->indices()->getMapping(['index' => $indexAlias]);
         } catch (\Elasticsearch\Common\Exceptions\Missing404Exception $e) {
         }
 
