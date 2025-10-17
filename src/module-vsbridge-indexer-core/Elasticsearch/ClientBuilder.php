@@ -34,7 +34,7 @@ class ClientBuilder implements ClientBuilderInterface
     public function build(array $options = [])
     {
         $options = array_merge($this->defaultOptions, $options);
-        $esClientBuilder = \Elastic\Elasticsearch\ClientBuilder::create();
+        $esClientBuilder = \OpenSearch\ClientBuilder::create();
         $host = $this->getHost($options);
 
         if (!empty($host)) {
