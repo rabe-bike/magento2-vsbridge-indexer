@@ -210,8 +210,9 @@ class IndexOperations implements IndexOperationInterface
                 ]
             ]
         ];
+        $this->resolveClient($storeId)->updateAliases($aliasActions);
 
-        $deletedIndices = [];
+        $aliasActions = $deletedIndices = [];
         $oldIndices = $this->resolveClient($storeId)->getIndicesNameByAlias($indexAlias);
 
         foreach ($oldIndices as $oldIndexName) {
