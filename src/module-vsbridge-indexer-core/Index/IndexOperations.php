@@ -227,7 +227,9 @@ class IndexOperations implements IndexOperationInterface
             }
         }
 
-        $this->resolveClient($storeId)->updateAliases($aliasActions);
+        if(!empty($aliasActions)) {
+            $this->resolveClient($storeId)->updateAliases($aliasActions);
+        }
 
         foreach ($deletedIndices as $deletedIndex) {
             $this->resolveClient($storeId)->deleteIndex($deletedIndex);
